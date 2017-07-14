@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>nojaast sample home page</title>
+</head>
+<body>
+<h1>nojaast sample home page</h1>
+<p>nojaast = NOde.js Just Another Application Server Template</p>
+<div id="ajax-elem"></div>
+<script>
+    function getBaseUrl(){
+        var port = window.location.port == "" ? "" : ":"+ window.location.port;
+        var baseUrl = window.location.protocol + "//" + window.location.hostname + port;
+        return baseUrl;
+    }
+
+    function demoAjaxCall(){
+        var url = getBaseUrl();
+        url += "/example/rest/get";
+        var http = new XMLHttpRequest();
+        http.open("GET", url);
+        http.onreadystatechange = function() {
+            if(http.readyState == 4){
+                if(http.status == 200){
+                    console.log(http.responseText);
+                    document.getElementById("ajax-elem").innerHTML = "AJAX call returned: " + http.responseText;
+                }else{
+                    console.log("Failed to make AJAX call: HTTP "+http.status+", "+http.responseText);
+                }
+            }
+        };
+        http.send();
+    }
+    demoAjaxCall();
+</script>
+</body>
+</html>
